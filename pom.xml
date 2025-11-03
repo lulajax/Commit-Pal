@@ -114,43 +114,38 @@
                 </configuration>
             </plugin>
             
-            <!-- Maven Resources Plugin - 复制资源到 jpackage-input -->
+            <!-- Maven Assembly/Copy Plugin - 准备 jpackage 输入目录 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>3.3.1</version>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>3.1.0</version>
                 <executions>
                     <execution>
-                        <id>copy-jar</id>
+                        <id>prepare-jpackage-input</id>
                         <phase>package</phase>
                         <goals>
-                            <goal>copy-resources</goal>
+                            <goal>run</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.build.directory}/jpackage-input</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>${project.build.directory}</directory>
-                                    <includes>
-                                        <include>*.jar</include>
-                                    </includes>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>copy-libs</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/jpackage-input/lib</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>${project.build.directory}/lib</directory>
-                                </resource>
-                            </resources>
+                            <target>
+                                <!-- 创建 jpackage-input 目录 -->
+                                <mkdir dir="${project.build.directory}/jpackage-input"/>
+                                <mkdir dir="${project.build.directory}/jpackage-input/lib"/>
+                                
+                                <!-- 复制 JAR 文件 -->
+                                <copy todir="${project.build.directory}/jpackage-input">
+                                    <fileset dir="${project.build.directory}">
+                                        <include name="*.jar"/>
+                                    </fileset>
+                                </copy>
+                                
+                                <!-- 复制依赖库 -->
+                                <copy todir="${project.build.directory}/jpackage-input/lib">
+                                    <fileset dir="${project.build.directory}/lib"/>
+                                </copy>
+                                
+                                <echo message="JPackage input directory prepared successfully"/>
+                            </target>
                         </configuration>
                     </execution>
                 </executions>
