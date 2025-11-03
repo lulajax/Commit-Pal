@@ -129,7 +129,7 @@
                     <mainJar>git-commit-helper-${project.version}.jar</mainJar>
                     <mainClass>com.junjie.githelper.MainApplication</mainClass>
                     <type>${jpackage.type}</type>
-                    <winConsole>true</winConsole>
+                    <!-- <winConsole>true</winConsole> -->
                     <javaOptions>
                         <option>-Dfile.encoding=UTF-8</option>
                         <option>--module-path</option>
