@@ -114,6 +114,37 @@
                 </configuration>
             </plugin>
             
+            <!-- Maven Resources Plugin - 复制资源到 jpackage-input -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.1</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/jpackage-input</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.build.directory}</directory>
+                                    <includes>
+                                        <include>*.jar</include>
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <directory>${project.build.directory}/lib</directory>
+                                    <targetPath>lib</targetPath>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            
             <!-- JPackage Plugin - 打包成安装文件 -->
             <plugin>
                 <groupId>org.panteleyev</groupId>
@@ -150,37 +181,6 @@
                     <!-- 图标配置（可选）- 如果没有图标文件，可以注释掉这一行 -->
                     <!-- <icon>${project.basedir}/src/main/resources/icon.ico</icon> -->
                 </configuration>
-            </plugin>
-            
-            <!-- Maven Resources Plugin - 复制资源到 jpackage-input -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>3.3.1</version>
-                <executions>
-                    <execution>
-                        <id>copy-resources</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/jpackage-input</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>${project.build.directory}</directory>
-                                    <includes>
-                                        <include>*.jar</include>
-                                    </includes>
-                                </resource>
-                                <resource>
-                                    <directory>${project.build.directory}/lib</directory>
-                                    <targetPath>lib</targetPath>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
