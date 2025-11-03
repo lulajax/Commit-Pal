@@ -1,4 +1,4 @@
-package com.yourcompany.githelper;
+package com.junjie.githelper;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

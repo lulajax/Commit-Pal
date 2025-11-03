@@ -1,11 +1,5 @@
-package com.yourcompany.githelper.controller;
+package com.junjie.githelper.controller;
 
-import com.yourcompany.githelper.model.AppConfig;
-import com.yourcompany.githelper.model.Project;
-import com.yourcompany.githelper.model.LLMSettings;
-import com.yourcompany.githelper.service.ConfigService;
-import com.yourcompany.githelper.service.GitService;
-import com.yourcompany.githelper.service.LLMService;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -19,6 +13,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.UUID;
+
+import com.junjie.githelper.model.AppConfig;
+import com.junjie.githelper.model.LLMSettings;
+import com.junjie.githelper.model.Project;
+import com.junjie.githelper.service.ConfigService;
+import com.junjie.githelper.service.GitService;
+import com.junjie.githelper.service.LLMService;
 
 public class MainViewController {
 

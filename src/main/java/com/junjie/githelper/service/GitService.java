@@ -1,10 +1,11 @@
-package com.yourcompany.githelper.service;
+package com.junjie.githelper.service;
 
-import com.yourcompany.githelper.model.Project;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
+
+import com.junjie.githelper.model.Project;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

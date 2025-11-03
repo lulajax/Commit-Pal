@@ -1,9 +1,9 @@
-package com.yourcompany.githelper.service;
+package com.junjie.githelper.service;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.yourcompany.githelper.model.AppConfig;
-import com.yourcompany.githelper.model.LLMSettings;
+import com.junjie.githelper.model.AppConfig;
+import com.junjie.githelper.model.LLMSettings;
 
 import java.io.FileReader;
 import java.io.FileWriter;

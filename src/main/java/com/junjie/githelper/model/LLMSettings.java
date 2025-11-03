@@ -1,4 +1,4 @@
-package com.yourcompany.githelper.model;
+package com.junjie.githelper.model;
 
 public record LLMSettings(
     String provider,

@@ -1,10 +1,10 @@
-package com.yourcompany.githelper.service;
+package com.junjie.githelper.service;
 
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.yourcompany.githelper.model.LLMSettings;
+import com.junjie.githelper.model.LLMSettings;
 
 import java.util.List;
 import java.util.Map;
