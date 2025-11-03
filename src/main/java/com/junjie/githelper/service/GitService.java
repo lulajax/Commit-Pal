@@ -68,17 +68,17 @@ public class GitService {
     }
     
     /**
-     * 获取指定时间段内的提交日志（包含代码变更）
-     * @param project 项目
-     * @param startDate 开始日期
-     * @param endDate 结束日期
-     * @param includeDiff 是否包含代码变更详情
-     * @return 格式化的提交日志
+     * Gets the commit logs for a specified period (including code changes).
+     * @param project The project.
+     * @param startDate The start date.
+     * @param endDate The end date.
+     * @param includeDiff Whether to include code change details.
+     * @return Formatted commit logs.
      */
     public String getCommitLogs(Project project, LocalDate startDate, LocalDate endDate, boolean includeDiff) throws IOException, GitAPIException {
         File repoDir = new File(project.path());
         
-        // 转换 LocalDate 到 Date
+        // Convert LocalDate to Date
         Date since = Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         Date until = Date.from(endDate.plusDays(1).atStartOfDay(ZoneId.systemDefault()).toInstant());
         
@@ -94,24 +94,24 @@ public class GitService {
             for (RevCommit commit : commits) {
                 Date commitDate = new Date(commit.getCommitTime() * 1000L);
                 
-                // 检查提交是否在指定时间范围内
+                // Check if the commit is within the specified time range
                 if (commitDate.after(since) && commitDate.before(until)) {
                     count++;
                     Instant instant = Instant.ofEpochSecond(commit.getCommitTime());
                     LocalDate commitLocalDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();
                     
                     logBuilder.append("=".repeat(80)).append("\n");
-                    logBuilder.append("提交: ").append(commit.getName().substring(0, 8)).append("\n");
-                    logBuilder.append("作者: ").append(commit.getAuthorIdent().getName()).append("\n");
-                    logBuilder.append("日期: ").append(commitLocalDate).append("\n");
-                    logBuilder.append("信息: ").append(commit.getFullMessage()).append("\n");
+                    logBuilder.append("Commit: ").append(commit.getName().substring(0, 8)).append("\n");
+                    logBuilder.append("Author: ").append(commit.getAuthorIdent().getName()).append("\n");
+                    logBuilder.append("Date: ").append(commitLocalDate).append("\n");
+                    logBuilder.append("Message: ").append(commit.getFullMessage()).append("\n");
                     
-                    // 如果需要包含 diff
+                    // If diff is needed
                     if (includeDiff) {
                         try {
                             ByteArrayOutputStream diffStream = new ByteArrayOutputStream();
                             
-                            // 获取父提交
+                            // Get parent commit
                             if (commit.getParentCount() > 0) {
                                 RevCommit parent = commit.getParent(0);
                                 git.diff()
@@ -122,15 +122,15 @@ public class GitService {
                                 
                                 String diff = diffStream.toString();
                                 if (!diff.isEmpty()) {
-                                    logBuilder.append("\n代码变更:\n");
+                                    logBuilder.append("\nCode Changes:\n");
                                     logBuilder.append(diff);
                                 }
                             } else {
-                                // 初始提交，显示所有文件
-                                logBuilder.append("\n[初始提交 - 显示所有新增文件]\n");
+                                // Initial commit, show all files
+                                logBuilder.append("\n[Initial commit - showing all new files]\n");
                             }
                         } catch (Exception e) {
-                            logBuilder.append("\n[无法获取此提交的代码变更: ").append(e.getMessage()).append("]\n");
+                            logBuilder.append("\n[Could not get code changes for this commit: ").append(e.getMessage()).append("]\n");
                         }
                     }
                     
@@ -139,23 +139,23 @@ public class GitService {
             }
             
             if (count == 0) {
-                return "在 " + startDate + " 至 " + endDate + " 期间没有找到提交记录。";
+                return "No commits found between " + startDate + " and " + endDate + ".";
             }
             
-            String header = String.format("共找到 %d 条提交记录 (%s 至 %s)\n\n", count, startDate, endDate);
+            String header = String.format("Found %d commits (%s to %s)\n\n", count, startDate, endDate);
             return header + logBuilder.toString();
         }
     }
     
     /**
-     * 兼容旧方法 - 不包含 diff
+     * Legacy method compatibility - does not include diff
      */
     public String getCommitLogs(Project project, LocalDate startDate, LocalDate endDate) throws IOException, GitAPIException {
         return getCommitLogs(project, startDate, endDate, false);
     }
     
     /**
-     * 准备 TreeParser 用于 diff
+     * Prepare TreeParser for diff
      */
     private org.eclipse.jgit.treewalk.AbstractTreeIterator prepareTreeParser(Repository repository, RevCommit commit) throws IOException {
         try (org.eclipse.jgit.revwalk.RevWalk walk = new org.eclipse.jgit.revwalk.RevWalk(repository)) {

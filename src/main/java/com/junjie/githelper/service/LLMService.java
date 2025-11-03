@@ -38,14 +38,14 @@ public class LLMService {
 
         String jsonBody = gson.toJson(requestBody);
 
-        // 构建 HTTP 请求
+        // Build the HTTP request
         HttpRequest request = HttpRequest.post(settings.base_url() + "/chat/completions")
             .header("Authorization", "Bearer " + settings.api_key())
             .header("Content-Type", "application/json")
             .body(jsonBody)
             .timeout(30000); // 30 seconds timeout
 
-        // 如果启用了代理，则设置代理
+        // If proxy is enabled, set the proxy
         if (settings.isProxyEnabled()) {
             Proxy proxy = new Proxy(Proxy.Type.HTTP,
                 new InetSocketAddress(settings.proxy_host(), settings.proxy_port()));

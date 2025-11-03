@@ -500,7 +500,7 @@ public class MainViewController {
     
     private void onGenerateWeeklyReport() {
         String commitLogs = commitLogsTextArea.getText();
-        if (commitLogs.isEmpty() || !commitLogs.toLowerCase().startsWith("commit")) {
+        if (commitLogs.isEmpty() || !commitLogs.toLowerCase().startsWith("found")) {
             weeklyReportTextArea.setText("Please fetch the commit logs first.");
             return;
         }
