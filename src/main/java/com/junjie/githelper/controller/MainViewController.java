@@ -160,7 +160,7 @@ public class MainViewController {
     }
 
     private void onSaveSettings() {
-        // 解析代理端口
+        // Parse proxy port
         Integer proxyPort = null;
         if (!proxyPortTextField.getText().trim().isEmpty()) {
             try {
@@ -227,8 +227,18 @@ public class MainViewController {
                 configService.saveConfig(appConfig);
                 // Refresh the list view to reflect the change
                 projectListView.getItems().set(projectIndex, updatedProject);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Success");
+                alert.setHeaderText(null);
+                alert.setContentText("Commit prompt has been saved.");
+                alert.showAndWait();
             } catch (IOException e) {
                 e.printStackTrace(); // Show error alert
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Failed to save");
+                alert.setContentText("An error occurred while saving the commit prompt: " + e.getMessage());
+                alert.showAndWait();
             }
         }
     }
@@ -248,7 +258,7 @@ public class MainViewController {
 
         String customPrompt = customPromptTextArea.getText();
         
-        // 解析代理端口
+        // Parse proxy port
         Integer proxyPort = null;
         if (!proxyPortTextField.getText().trim().isEmpty()) {
             try {
@@ -367,7 +377,10 @@ public class MainViewController {
                         UUID.randomUUID().toString(),
                         selectedDirectory.getName(),
                         selectedDirectory.getAbsolutePath(),
-                        "根据代码变更生成提交信息\n\n1.中文响应\n2.符合git commit规范\n3.只输出git commit内容，去掉markdown标签\n4.参考最近提交的commit风格\n5.合并到一次commit"
+                        "Generate a concise commit message based on the code changes.\n\n" +
+                                "- The message should follow the Conventional Commits specification.\n" +
+                                "- Use present tense (e.g., 'add feature' not 'added feature').\n" +
+                                "- Only output the commit message content, without any markdown formatting."
                 );
 
                 var updatedProjects = new ArrayList<>(appConfig.projects());
@@ -438,11 +451,11 @@ public class MainViewController {
     // ==================== Weekly Report Methods ====================
     
     private void initializeDatePickers() {
-        // 设置默认日期为本周一到今天
+        // Set default date range from Monday of the current week to today
         java.time.LocalDate today = java.time.LocalDate.now();
         java.time.DayOfWeek dayOfWeek = today.getDayOfWeek();
         
-        // 计算本周一的日期
+        // Calculate the date of Monday of the current week
         java.time.LocalDate monday = today.minusDays(dayOfWeek.getValue() - 1);
         
         startDatePicker.setValue(monday);
@@ -452,7 +465,7 @@ public class MainViewController {
     private void onFetchCommitLogs() {
         Project selectedProject = projectListView.getSelectionModel().getSelectedItem();
         if (selectedProject == null) {
-            commitLogsTextArea.setText("请先选择一个项目。");
+            commitLogsTextArea.setText("Please select a project.");
             return;
         }
         
@@ -460,25 +473,25 @@ public class MainViewController {
         java.time.LocalDate endDate = endDatePicker.getValue();
         
         if (startDate == null || endDate == null) {
-            commitLogsTextArea.setText("请选择开始和结束日期。");
+            commitLogsTextArea.setText("Please select a start and end date.");
             return;
         }
         
         if (startDate.isAfter(endDate)) {
-            commitLogsTextArea.setText("开始日期不能晚于结束日期。");
+            commitLogsTextArea.setText("Start date cannot be after end date.");
             return;
         }
         
-        commitLogsTextArea.setText("正在获取提交日志...");
+        commitLogsTextArea.setText("Fetching commit logs...");
         
-        // 在后台线程获取日志（不包含代码变更，避免上下文过长）
+        // Fetch logs in a background thread (without code diffs to avoid excessive context length)
         new Thread(() -> {
             try {
                 String logs = gitService.getCommitLogs(selectedProject, startDate, endDate, false);
                 Platform.runLater(() -> commitLogsTextArea.setText(logs));
             } catch (Exception e) {
                 Platform.runLater(() -> {
-                    commitLogsTextArea.setText("获取提交日志失败: " + e.getMessage());
+                    commitLogsTextArea.setText("Failed to fetch commit logs: " + e.getMessage());
                     e.printStackTrace();
                 });
             }
@@ -487,24 +500,24 @@ public class MainViewController {
     
     private void onGenerateWeeklyReport() {
         String commitLogs = commitLogsTextArea.getText();
-        if (commitLogs.isEmpty() || commitLogs.startsWith("请") || commitLogs.startsWith("正在") || commitLogs.startsWith("获取")) {
-            weeklyReportTextArea.setText("请先获取提交日志。");
+        if (commitLogs.isEmpty() || !commitLogs.toLowerCase().startsWith("commit")) {
+            weeklyReportTextArea.setText("Please fetch the commit logs first.");
             return;
         }
         
         String reportPrompt = weeklyReportPromptTextArea.getText();
         if (reportPrompt.trim().isEmpty()) {
-            weeklyReportTextArea.setText("周报提示词不能为空。");
+            weeklyReportTextArea.setText("Commit report prompt cannot be empty.");
             return;
         }
         
-        // 解析代理端口
+        // Parse proxy port
         Integer proxyPort = null;
         if (!proxyPortTextField.getText().trim().isEmpty()) {
             try {
                 proxyPort = Integer.parseInt(proxyPortTextField.getText().trim());
             } catch (NumberFormatException e) {
-                weeklyReportTextArea.setText("Error: 代理端口号无效。");
+                weeklyReportTextArea.setText("Error: Invalid proxy port number.");
                 return;
             }
         }
@@ -519,16 +532,16 @@ public class MainViewController {
                 useProxyCheckBox.isSelected()
         );
         
-        weeklyReportTextArea.setText("正在生成提交报告...");
+        weeklyReportTextArea.setText("Generating commit report...");
         
-        // 在后台线程生成周报
+        // Generate commit report in a background thread
         new Thread(() -> {
             try {
                 String weeklyReport = llmService.generateWeeklyReport(settings, reportPrompt, commitLogs);
                 Platform.runLater(() -> weeklyReportTextArea.setText(weeklyReport));
             } catch (Exception e) {
                 Platform.runLater(() -> {
-                    weeklyReportTextArea.setText("生成周报失败: " + e.getMessage());
+                    weeklyReportTextArea.setText("Failed to generate commit report: " + e.getMessage());
                     e.printStackTrace();
                 });
             }
@@ -541,11 +554,11 @@ public class MainViewController {
         content.putString(weeklyReportTextArea.getText());
         clipboard.setContent(content);
         
-        // 显示提示
+        // Show confirmation
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("复制成功");
+        alert.setTitle("Copied to Clipboard");
         alert.setHeaderText(null);
-        alert.setContentText("周报已复制到剪贴板。");
+        alert.setContentText("The commit report has been copied to the clipboard.");
         alert.showAndWait();
     }
     
@@ -553,9 +566,9 @@ public class MainViewController {
         String newPrompt = weeklyReportPromptTextArea.getText();
         if (newPrompt.trim().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("提示");
+            alert.setTitle("Warning");
             alert.setHeaderText(null);
-            alert.setContentText("周报提示词不能为空。");
+            alert.setContentText("Commit report prompt cannot be empty.");
             alert.showAndWait();
             return;
         }
@@ -571,32 +584,32 @@ public class MainViewController {
         try {
             configService.saveConfig(appConfig);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("保存成功");
+            alert.setTitle("Success");
             alert.setHeaderText(null);
-            alert.setContentText("周报提示词已保存。");
+            alert.setContentText("Commit report prompt has been saved.");
             alert.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("错误");
-            alert.setHeaderText("保存失败");
-            alert.setContentText("保存周报提示词时出错: " + e.getMessage());
+            alert.setTitle("Error");
+            alert.setHeaderText("Failed to save");
+            alert.setContentText("An error occurred while saving the commit report prompt: " + e.getMessage());
             alert.showAndWait();
         }
     }
     
     /**
-     * 根据选中的 Tab 更新提示词区域的可见性
+     * Updates the visibility of the prompt section based on the selected tab.
      */
     private void updatePromptSectionVisibility(javafx.scene.control.Tab selectedTab) {
         if (selectedTab == commitTab) {
-            // 显示提交信息提示词，隐藏周报提示词
+            // Show the commit prompt section, hide the report prompt section
             commitPromptSection.setVisible(true);
             commitPromptSection.setManaged(true);
             weeklyReportPromptSection.setVisible(false);
             weeklyReportPromptSection.setManaged(false);
         } else if (selectedTab == weeklyReportTab) {
-            // 显示周报提示词，隐藏提交信息提示词
+            // Show the report prompt section, hide the commit prompt section
             commitPromptSection.setVisible(false);
             commitPromptSection.setManaged(false);
             weeklyReportPromptSection.setVisible(true);

@@ -22,7 +22,7 @@
     <center>
         <TabPane fx:id="mainTabPane" tabClosingPolicy="UNAVAILABLE">
             <!-- 提交信息 Tab -->
-            <Tab fx:id="commitTab" text="提交信息">
+            <Tab fx:id="commitTab" text="Git Commit">
                 <ScrollPane fitToWidth="true" fitToHeight="true" styleClass="edge-to-edge">
                     <VBox spacing="15" style="-fx-padding: 20;">
                         <VBox spacing="8">
@@ -49,35 +49,35 @@
             </Tab>
             
             <!-- 提交报告 Tab -->
-            <Tab fx:id="weeklyReportTab" text="提交报告">
+            <Tab fx:id="weeklyReportTab" text="Commit Report">
                 <ScrollPane fitToWidth="true" fitToHeight="true" styleClass="edge-to-edge">
                     <VBox spacing="15" style="-fx-padding: 20;">
                         <VBox spacing="10">
-                            <Label text="选择时间段" styleClass="title-4"/>
+                            <Label text="Select Date Range" styleClass="title-4"/>
                             <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-flex-wrap: wrap;">
-                                <Label text="开始日期:"/>
-                                <DatePicker fx:id="startDatePicker" promptText="选择开始日期" prefWidth="150"/>
-                                <Label text="结束日期:"/>
-                                <DatePicker fx:id="endDatePicker" promptText="选择结束日期" prefWidth="150"/>
-                                <Button text="获取提交日志" fx:id="fetchLogsButton" prefWidth="140" styleClass="accent"/>
+                                <!-- <Label text="Start Date:"/> -->
+                                <DatePicker fx:id="startDatePicker" promptText="Select start date" prefWidth="150"/>
+                                <!-- <Label text="End Date:"/> -->
+                                <DatePicker fx:id="endDatePicker" promptText="Select end date" prefWidth="150"/>
+                                <Button text="Fetch Commit Logs" fx:id="fetchLogsButton" prefWidth="140" styleClass="accent"/>
                             </HBox>
                         </VBox>
                         
                         <VBox spacing="8">
-                            <Label text="提交日志" styleClass="title-4"/>
+                            <Label text="Commit Logs" styleClass="title-4"/>
                             <TextArea fx:id="commitLogsTextArea" editable="false" wrapText="true" 
                                       minHeight="100" prefHeight="200" prefRowCount="8"/>
                         </VBox>
                         
                         <VBox spacing="8">
-                            <Label text="提交报告" styleClass="title-4"/>
+                            <Label text="Commit Report" styleClass="title-4"/>
                             <TextArea fx:id="weeklyReportTextArea" wrapText="true" 
                                       minHeight="100" prefHeight="200" prefRowCount="8"/>
                         </VBox>
                         
                         <HBox spacing="10" alignment="CENTER_LEFT">
-                            <Button text="生成周报" fx:id="generateReportButton" prefWidth="120" styleClass="accent"/>
-                            <Button text="复制周报" fx:id="copyReportButton" prefWidth="120"/>
+                            <Button text="Generate" fx:id="generateReportButton" prefWidth="120" styleClass="accent"/>
+                            <Button text="Copy" fx:id="copyReportButton" prefWidth="120"/>
                         </HBox>
                     </VBox>
                 </ScrollPane>
@@ -148,7 +148,7 @@
             <!-- Weekly Report Prompt 区域 -->
             <VBox fx:id="weeklyReportPromptSection" spacing="8" VBox.vgrow="ALWAYS" 
                   visible="false" managed="false">
-                <Label text="Report Prompt" styleClass="title-4"/>
+                <Label text="Commit Report Prompt" styleClass="title-4"/>
                 <TextArea fx:id="weeklyReportPromptTextArea" VBox.vgrow="ALWAYS"
                           wrapText="true" prefRowCount="4"/>
                 <Button text="Save Prompt" fx:id="saveReportPromptButton" prefWidth="140" 

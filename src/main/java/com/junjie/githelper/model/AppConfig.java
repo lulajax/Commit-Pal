@@ -9,7 +9,7 @@ public record AppConfig(
     String selected_project_id,
     String weekly_report_prompt
 ) {
-    // 默认构造器，提供默认的周报提示词
+    // 默认构造器，提供默认的项目报告提示词
     public AppConfig(String version, LLMSettings llm_settings, List<Project> projects, String selected_project_id) {
         this(version, llm_settings, projects, selected_project_id, getDefaultWeeklyReportPrompt());
     }
