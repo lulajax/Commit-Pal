@@ -58,7 +58,7 @@ if ($LASTEXITCODE -ne 0) {
 Write-Host ""
 Write-Host "[4/4] 创建安装程序 ($packageType)..." -ForegroundColor Yellow
 if ($isWindows -and ($packageType -eq "EXE" -or $packageType -eq "MSI")) {
-    mvn jpackage:jpackage `"-Djpackage.type=$packageType`" `"-Djpackage.winMenu=true`" `"-Djpackage.winShortcut=true`" `"-Djpackage.winDirChooser=true`" `"-Djpackage.winMenuGroup=Git Commit Helper`"
+    mvn jpackage:jpackage `"-Djpackage.type=$packageType`" `"-Djpackage.winMenu=true`" `"-Djpackage.winShortcut=true`" `"-Djpackage.winDirChooser=true`" `"-Djpackage.winMenuGroup=Commit Pal`"
 } else {
     mvn jpackage:jpackage `"-Djpackage.type=$packageType`"
 }

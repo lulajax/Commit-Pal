@@ -26,7 +26,7 @@ if ($LASTEXITCODE -ne 0) {
 
 Write-Host ""
 Write-Host "[3/3] 创建 Windows 安装程序..." -ForegroundColor Yellow
-mvn jpackage:jpackage `"-Djpackage.type=EXE`" `"-Djpackage.winMenu=true`" `"-Djpackage.winShortcut=true`" `"-Djpackage.winDirChooser=true`" `"-Djpackage.winMenuGroup=Git Commit Helper`"
+mvn jpackage:jpackage `"-Djpackage.type=EXE`" `"-Djpackage.winMenu=true`" `"-Djpackage.winShortcut=true`" `"-Djpackage.winDirChooser=true`" `"-Djpackage.winMenuGroup=Commit Pal`"
 if ($LASTEXITCODE -ne 0) {
     Write-Host "✗ 打包失败" -ForegroundColor Red
     Write-Host ""

@@ -24,7 +24,7 @@ public class MainApplication extends Application {
         
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("main-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1200, 700);
-        stage.setTitle("Git Commit Helper");
+        stage.setTitle("Commit Pal");
         stage.setScene(scene);
         stage.setMinWidth(800);
         stage.setMinHeight(500);

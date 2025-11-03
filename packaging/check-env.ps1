@@ -6,7 +6,7 @@ $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 Set-Location (Split-Path -Parent $scriptDir)
 
 Write-Host "================================" -ForegroundColor Cyan
-Write-Host "环境检测 - Git Commit Helper" -ForegroundColor Cyan
+Write-Host "环境检测 - Commit Pal" -ForegroundColor Cyan
 Write-Host "================================" -ForegroundColor Cyan
 Write-Host ""
 
