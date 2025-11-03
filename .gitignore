@@ -1,0 +1,11 @@
+### IDEA ###
+.idea/*
+*.iml
+*/target/*
+*/*.iml
+/.gradle/
+logs/
+.cursor/
+.vscode/
+.claude/
+*.code-workspace
