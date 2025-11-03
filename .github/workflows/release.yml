@@ -37,7 +37,7 @@ jobs:
 
     - name: Set jpackage type for Windows
       if: runner.os == 'Windows'
-      run: echo "JPACKAGE_TYPE=MSI" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+      run: echo "JPACKAGE_TYPE=APP_IMAGE" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
     - name: Set jpackage type for macOS
       if: runner.os == 'macOS'
@@ -72,11 +72,10 @@ jobs:
         cd target/installer
         mv *.deb CommitPal-linux-amd64.deb
         
-    - name: Rename artifact on Windows
+    - name: Package Windows portable version
       if: runner.os == 'Windows'
       run: |
-        $file = Get-ChildItem -Path target/installer -Filter "*.msi" | Select-Object -First 1
-        Move-Item -Path $file.FullName -Destination "target/installer/CommitPal-windows-amd64.msi"
+        Compress-Archive -Path "target/installer/CommitPal/*" -DestinationPath "target/installer/CommitPal-windows-amd64-portable.zip"
 
     - name: Rename artifact on macOS
       if: runner.os == 'macOS'
@@ -105,7 +104,7 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: |
-          artifacts/CommitPal-Windows/CommitPal-windows-amd64.msi
+          artifacts/CommitPal-Windows/CommitPal-windows-amd64-portable.zip
           artifacts/CommitPal-Linux/CommitPal-linux-amd64.deb
           artifacts/CommitPal-macOS/CommitPal-macos-amd64.dmg
         draft: false
