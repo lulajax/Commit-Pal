@@ -162,11 +162,52 @@ mvn clean compile
 mvn test
 ```
 
-### 打包
+### 打包应用程序
 
+创建可分发的 JAR 文件：
 ```bash
 mvn clean package
 ```
+
+### 生成安装程序（Windows / macOS）
+
+项目支持生成原生安装程序。所有打包相关的脚本和文档都在 `packaging/` 目录中。
+
+#### ⚡ 快速开始
+
+**检查环境**：
+```powershell
+cd packaging
+.\check-env.ps1
+```
+
+**Windows 用户**：
+```powershell
+# 选项 1：便携版（推荐，无需额外工具）
+.\build-portable.ps1
+
+# 选项 2：完整安装程序（需要 WiX Toolset）
+.\build-windows.ps1
+```
+
+**macOS 用户**：
+```bash
+cd packaging
+chmod +x build-mac.sh
+./build-mac.sh
+```
+
+生成的安装文件位于 `target/installer/` 目录。
+
+#### 📚 完整文档
+
+**查看 [packaging/README.md](packaging/README.md) 获取完整打包指南**，包括：
+- 🚀 快速开始（5 分钟上手）
+- 📋 环境要求和配置
+- 💡 场景示例和最佳实践
+- 🔧 故障排除
+- 🎨 自定义配置（图标、版本号等）
+- 📊 打包选项对比
 
 ## 技术栈
 

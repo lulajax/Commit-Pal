@@ -97,6 +97,82 @@
                     </execution>
                 </executions>
             </plugin>
+            
+            <!-- Maven JAR Plugin - 创建可执行 JAR -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <mainClass>com.junjie.githelper.MainApplication</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            
+            <!-- JPackage Plugin - 打包成安装文件 -->
+            <plugin>
+                <groupId>org.panteleyev</groupId>
+                <artifactId>jpackage-maven-plugin</artifactId>
+                <version>1.6.5</version>
+                <configuration>
+                    <name>GitCommitHelper</name>
+                    <appVersion>1.0.0</appVersion>
+                    <vendor>Junjie</vendor>
+                    <description>Git Commit Helper - 智能提交信息生成工具</description>
+                    <destination>${project.build.directory}/installer</destination>
+                    <input>${project.build.directory}/jpackage-input</input>
+                    <mainJar>git-commit-helper-${project.version}.jar</mainJar>
+                    <mainClass>com.junjie.githelper.MainApplication</mainClass>
+                    <type>${jpackage.type}</type>
+                    <winConsole>true</winConsole>
+                    <javaOptions>
+                        <option>-Dfile.encoding=UTF-8</option>
+                        <option>--module-path</option>
+                        <option>app/lib</option>
+                        <option>--add-modules</option>
+                        <option>javafx.controls,javafx.fxml</option>
+                    </javaOptions>
+                    
+                    <!-- 图标配置（可选）- 如果没有图标文件，可以注释掉这一行 -->
+                    <!-- <icon>${project.basedir}/src/main/resources/icon.ico</icon> -->
+                </configuration>
+            </plugin>
+            
+            <!-- Maven Resources Plugin - 复制资源到 jpackage-input -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.1</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/jpackage-input</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.build.directory}</directory>
+                                    <includes>
+                                        <include>*.jar</include>
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <directory>${project.build.directory}/lib</directory>
+                                    <targetPath>lib</targetPath>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 </project>

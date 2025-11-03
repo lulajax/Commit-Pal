@@ -12,5 +12,15 @@ logs/
 # Maven
 target/
 target/*
+
+# Packaging artifacts
+*.exe
+*.msi
+*.dmg
+*.pkg
+*.deb
+*.rpm
+installer/
+
 # Keep lib directory with JavaFX dependencies
 # lib/
