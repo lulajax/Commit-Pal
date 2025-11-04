@@ -4,9 +4,9 @@
   <p><strong>您的智能 Git 提交伙伴，让每一次提交都精准而优雅。</strong></p>
   
   <p>
-    <a href="https://github.com/your-repo/commit-pal/releases"><img src="https://img.shields.io/github/v/release/your-repo/commit-pal?style=for-the-badge&logo=github" alt="版本"></a>
-    <a href="https://github.com/your-repo/commit-pal/actions/workflows/release.yml"><img src="https://img.shields.io/github/actions/workflow/status/your-repo/commit-pal/release.yml?branch=main&style=for-the-badge&logo=githubactions" alt="构建状态"></a>
-    <a href="LICENSE"><img src="https://img.shields.io/github/license/your-repo/commit-pal?style=for-the-badge" alt="许可证"></a>
+    <a href="https://github.com/lulajax/Commit-Pal/releases"><img src="https://img.shields.io/github/v/release/Commit-Pal/commit-pal?style=for-the-badge&logo=github" alt="版本"></a>
+    <a href="https://github.com/Commit-Pal/commit-pal/actions/workflows/release.yml"><img src="https://img.shields.io/github/actions/workflow/status/Commit-Pal/commit-pal/release.yml?branch=main&style=for-the-badge&logo=githubactions" alt="构建状态"></a>
+    <a href="LICENSE"><img src="https://img.shields.io/github/license/Commit-Pal/commit-pal?style=for-the-badge" alt="许可证"></a>
     <a href="#"><img src="https://img.shields.io/badge/JavaFX-21-orange?style=for-the-badge&logo=oracle" alt="JavaFX"></a>
   </p>
 </div>
