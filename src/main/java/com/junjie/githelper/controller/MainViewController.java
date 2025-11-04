@@ -2,6 +2,7 @@ package com.junjie.githelper.controller;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
@@ -33,6 +34,8 @@ public class MainViewController {
     @FXML private javafx.scene.control.TabPane mainTabPane;
     @FXML private javafx.scene.control.Tab commitTab;
     @FXML private javafx.scene.control.Tab weeklyReportTab;
+    @FXML private javafx.scene.control.Tab chatTab;
+    @FXML private VBox chatTabContent;
 
     // Center Pane - Commit Tab
     @FXML private TextArea stagedChangesTextArea;
@@ -71,6 +74,7 @@ public class MainViewController {
     private GitService gitService;
     private LLMService llmService;
     private AppConfig appConfig;
+    private ChatViewController chatViewController;
 
     @FXML
     public void initialize() {
@@ -120,6 +124,71 @@ public class MainViewController {
         
         // Initialize prompt section visibility
         updatePromptSectionVisibility(mainTabPane.getSelectionModel().getSelectedItem());
+        
+        // Load chat view
+        loadChatView();
+        
+        // Listen for tab selection changes to update chat context
+        mainTabPane.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldTab, newTab) -> {
+                    if (newTab == chatTab) {
+                        updateChatContext();
+                    }
+                }
+        );
+    }
+    
+    /**
+     * 加载对话视图
+     */
+    private void loadChatView() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/junjie/githelper/chat-view.fxml"));
+            javafx.scene.layout.BorderPane chatView = loader.load();
+            chatViewController = loader.getController();
+            
+            // 将聊天视图添加到 chatTabContent
+            chatTabContent.getChildren().add(chatView);
+            VBox.setVgrow(chatView, javafx.scene.layout.Priority.ALWAYS);
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Failed to load chat view");
+            alert.setContentText("An error occurred: " + e.getMessage());
+            alert.showAndWait();
+        }
+    }
+    
+    /**
+     * 更新对话窗口的上下文（LLM 设置和当前项目）
+     */
+    private void updateChatContext() {
+        if (chatViewController != null) {
+            // Parse proxy port
+            Integer proxyPort = null;
+            if (!proxyPortTextField.getText().trim().isEmpty()) {
+                try {
+                    proxyPort = Integer.parseInt(proxyPortTextField.getText().trim());
+                } catch (NumberFormatException e) {
+                    // Use null if invalid
+                }
+            }
+            
+            LLMSettings settings = new LLMSettings(
+                    providerTextField.getText(),
+                    apiKeyField.getText(),
+                    modelTextField.getText(),
+                    baseUrlTextField.getText(),
+                    proxyHostTextField.getText(),
+                    proxyPort,
+                    useProxyCheckBox.isSelected()
+            );
+            
+            Project currentProject = projectListView.getSelectionModel().getSelectedItem();
+            chatViewController.setContext(settings, currentProject);
+        }
     }
 
     private void onCopy() {

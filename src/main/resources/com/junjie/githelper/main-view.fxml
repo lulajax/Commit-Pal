@@ -82,6 +82,11 @@
                     </VBox>
                 </ScrollPane>
             </Tab>
+            
+            <!-- AI 对话 Tab -->
+            <Tab fx:id="chatTab" text="AI 对话">
+                <VBox fx:id="chatTabContent"/>
+            </Tab>
         </TabPane>
     </center>
 

@@ -14,6 +14,7 @@
         <gson.version>2.10.1</gson.version>
         <hutool.version>5.8.25</hutool.version>
         <atlantafx.version>2.0.1</atlantafx.version>
+        <langchain4j.version>0.35.0</langchain4j.version>
         <jpackage.type>${env.JPACKAGE_TYPE}</jpackage.type>
         <!-- OS-specific module path -->
         <jpackage.module.path>lib/app/lib</jpackage.module.path>
@@ -58,6 +59,18 @@
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-http</artifactId>
             <version>${hutool.version}</version>
+        </dependency>
+
+        <!-- LangChain4j -->
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j</artifactId>
+            <version>${langchain4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-open-ai</artifactId>
+            <version>${langchain4j.version}</version>
         </dependency>
     </dependencies>
 

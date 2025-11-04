@@ -1,0 +1,85 @@
+/* Chat View Styles */
+
+.chat-header {
+    -fx-background-color: -color-bg-default;
+    -fx-border-color: -color-border-default;
+    -fx-border-width: 0 0 1 0;
+}
+
+.status-label {
+    -fx-text-fill: -color-fg-muted;
+    -fx-font-size: 12px;
+}
+
+.chat-scroll-pane {
+    -fx-background-color: -color-bg-default;
+    -fx-border-color: transparent;
+}
+
+.chat-container {
+    -fx-background-color: -color-bg-default;
+}
+
+.message-box {
+    -fx-background-color: transparent;
+}
+
+.message-header {
+    -fx-text-fill: -color-fg-muted;
+    -fx-font-size: 11px;
+    -fx-padding: 0 5 0 5;
+}
+
+.message-text {
+    -fx-fill: -color-fg-default;
+    -fx-font-size: 13px;
+}
+
+.user-message {
+    -fx-background-color: -color-accent-emphasis;
+    -fx-background-radius: 8px;
+    -fx-max-width: 600px;
+}
+
+.user-message .message-text {
+    -fx-fill: white;
+}
+
+.assistant-message {
+    -fx-background-color: -color-bg-subtle;
+    -fx-background-radius: 8px;
+    -fx-border-color: -color-border-default;
+    -fx-border-width: 1px;
+    -fx-border-radius: 8px;
+    -fx-max-width: 700px;
+}
+
+.system-message {
+    -fx-background-color: -color-warning-emphasis;
+    -fx-background-radius: 8px;
+    -fx-max-width: 600px;
+}
+
+.system-message .message-text {
+    -fx-fill: -color-fg-default;
+}
+
+.input-area {
+    -fx-background-color: -color-bg-default;
+    -fx-border-color: -color-border-default;
+    -fx-border-width: 1 0 0 0;
+}
+
+.user-input {
+    -fx-font-size: 13px;
+    -fx-background-radius: 5px;
+}
+
+.primary-button {
+    -fx-min-width: 100px;
+}
+
+.secondary-button {
+    -fx-min-width: 100px;
+}
+

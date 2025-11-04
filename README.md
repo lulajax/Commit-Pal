@@ -18,6 +18,7 @@
 ## ✨ 核心功能
 
 - 🤖 **AI 驱动生成**：根据暂存区代码变更，智能生成符合规范的提交信息。
+- 💬 **智能对话助手**：全新的 AI 对话功能，通过自然语言交互自动识别意图并调用相应工具（基于 LangChain4j）。
 - 📈 **提交报告分析**：选择任意时间段，一键生成精美的提交报告，轻松完成周报和项目总结。
 - 🗂️ **多项目管理**：无缝切换和管理多个 Git 仓库，告别混乱。
 - 🎨 **高度可定制**：无论是提交信息还是分析报告，都可通过自定义 Prompt 模板满足团队规范。
@@ -81,10 +82,20 @@ mvn clean javafx:run
 3. 在右侧 **Commit Report Prompt** 中调整模板。
 4. 点击 **Generate** 生成报告，然后 **Copy** 到剪贴板。
 
+### 4. 使用 AI 对话助手 🆕
+1. 切换到 **AI 对话** 标签页。
+2. 与 AI 助手对话，它会自动识别你的意图并调用相应工具：
+   - 💡 "帮我生成一个 commit" → 自动分析暂存区并生成提交信息
+   - 📊 "生成本周的提交报告" → 自动获取本周提交并生成报告
+   - 🔍 "查看暂存区状态" → 显示当前暂存区的文件变更
+   - 📜 "最近的提交历史" → 显示最近的提交记录
+3. 助手会根据你的自然语言指令自动完成相应操作，无需手动切换标签页！
+
 
 ## 🛠️ 技术栈
 
 - **核心框架**: JavaFX 21
+- **AI 集成**: [LangChain4j](https://github.com/langchain4j/langchain4j) - AI 工具调用与对话管理
 - **UI 主题**: [AtlantaFX](https://github.com/mkpaz/atlantafx)
 - **Git 操作**: [JGit](https://www.eclipse.org/jgit/)
 - **数据处理**: [Gson](https://github.com/google/gson)
@@ -103,6 +114,16 @@ mvn clean javafx:run
 cd packaging
 .\build-portable.ps1
 ```
+
+## ❓ 故障排查
+
+遇到问题了吗？查看 **[故障排查指南](docs/TROUBLESHOOTING.md)** 获取帮助。
+
+常见问题：
+- Git 命令无法在项目中运行
+- 应用启动失败
+- LLM API 调用失败
+- 对话助手无响应
 
 ## 🤝 贡献
 

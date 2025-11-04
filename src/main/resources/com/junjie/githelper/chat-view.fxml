@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.junjie.githelper.controller.ChatViewController"
+            prefHeight="600.0" prefWidth="800.0"
+            stylesheets="@chat-style.css">
+    
+    <!-- 顶部状态栏 -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="10" styleClass="chat-header">
+            <padding>
+                <Insets top="10" right="15" bottom="10" left="15"/>
+            </padding>
+            <Label text="AI 智能助手" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="statusLabel" text="就绪" styleClass="status-label"/>
+        </HBox>
+    </top>
+    
+    <!-- 中间聊天区域 -->
+    <center>
+        <ScrollPane fx:id="chatScrollPane" fitToWidth="true" styleClass="chat-scroll-pane">
+            <VBox fx:id="chatContainer" spacing="10" styleClass="chat-container">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+            </VBox>
+        </ScrollPane>
+    </center>
+    
+    <!-- 底部输入区域 -->
+    <bottom>
+        <VBox spacing="10" styleClass="input-area">
+            <padding>
+                <Insets top="10" right="15" bottom="15" left="15"/>
+            </padding>
+            
+            <!-- 输入框 -->
+            <TextArea fx:id="userInputTextArea" 
+                      promptText="输入你的问题... (Enter 发送，Shift+Enter 换行)"
+                      wrapText="true"
+                      prefRowCount="3"
+                      styleClass="user-input"/>
+            
+            <!-- 按钮区域 -->
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <Button fx:id="clearButton" 
+                        text="清空对话" 
+                        styleClass="secondary-button"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button fx:id="sendButton" 
+                        text="发送" 
+                        defaultButton="true"
+                        styleClass="primary-button"/>
+            </HBox>
+        </VBox>
+    </bottom>
+    
+</BorderPane>
+
