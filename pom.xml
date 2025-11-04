@@ -144,7 +144,9 @@
                                 
                                 <!-- 复制依赖库 -->
                                 <copy todir="${project.build.directory}/jpackage-input/lib">
-                                    <fileset dir="${project.build.directory}/lib"/>
+                                    <fileset dir="${project.build.directory}/lib">
+                                        <exclude name="javafx-*-${javafx.version}.jar"/>
+                                    </fileset>
                                 </copy>
                                 
                                 <echo message="JPackage input directory prepared successfully"/>
