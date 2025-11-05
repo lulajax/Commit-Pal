@@ -16,17 +16,18 @@ public record AppConfig(
     
     private static String getDefaultWeeklyReportPrompt() {
         return """
-                请根据以下 Git 提交日志，生成一份简洁的提交报告。
-                
-                要求：
-                1. 总结本周主要完成的功能和改进
-                2. 列出重点工作项
-                3. 使用专业的技术语言
-                4. 格式清晰，条理分明
-                5. 突出技术亮点和创新点
-                6. 按功能模块分类整理
-                
-                提交日志：
+                Please generate a concise commit report based on the following Git commit logs.
+
+                Requirements:
+
+                - Summarize the main features and improvements completed this week.
+                - List the key tasks.
+                - Use professional technical language.
+                - Format should be clear and organized.
+                - Organize by functional modules.
+                - in chinese
+
+                Commit log:
                 """;
     }
     

@@ -228,7 +228,7 @@ public class MainViewController {
                 // Refresh the list view to reflect the change
                 projectListView.getItems().set(projectIndex, updatedProject);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Success");
+                alert.setTitle("Prompt Saved");
                 alert.setHeaderText(null);
                 alert.setContentText("Commit prompt has been saved.");
                 alert.showAndWait();
@@ -377,10 +377,16 @@ public class MainViewController {
                         UUID.randomUUID().toString(),
                         selectedDirectory.getName(),
                         selectedDirectory.getAbsolutePath(),
-                        "Generate a concise commit message based on the code changes.\n\n" +
-                                "- The message should follow the Conventional Commits specification.\n" +
-                                "- Use present tense (e.g., 'add feature' not 'added feature').\n" +
-                                "- Only output the commit message content, without any markdown formatting."
+                        """
+                           Please generate a concise commit message based on the code changes.
+
+                           Requirements:
+
+                           - The message should follow the Conventional Commits specification.
+                           - Use present tense (e.g., 'add feature' not 'added feature').
+                           - Only output the commit message content, without any markdown formatting.
+                           - in chinese.
+                        """
                 );
 
                 var updatedProjects = new ArrayList<>(appConfig.projects());
